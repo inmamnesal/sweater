@@ -7,23 +7,29 @@
         <span><a href="/user">User list</a></span>
     </div>
     <div>
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <input type="text" name="text" placeholder="Enter message">
             <input type="text" name="tag" placeholder="Tag">
+            <input type="file" name="file" >
             <button type="submit">Add</button>
         </form>
     </div>
     <div>Message list</div>
     <form method="get" action="main">
-        <input type="text" name="filter" value="${filter}">
+        <input type="text" name="filter" value="${filter?ifExists}">
         <button type="submit">Найти</button>
     </form>
-    <#list messages as messages>
+    <#list messages as message>
     <div>
-        <b>${messages.id}</b>
-        <span>${messages.text}</span>
-        <i>${messages.tag}</i>
-        <strong>${messages.authorName}</strong>
+        <b>${message.id}</b>
+        <span>${message.text}</span>
+        <i>${message.tag}</i>
+        <strong>${message.authorName}</strong>
+        <div>
+            <#if message.filename??>
+                <img src="/img/${message.filename}">
+            </#if>
+        </div>
     </div>
     <#else>
         no messages
